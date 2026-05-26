@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     private WebView webView;
+    private android.webkit.ValueCallback<android.net.Uri[]> filePathCallback;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -45,13 +46,11 @@ public class MainActivity extends AppCompatActivity {
 
         webView.setWebViewClient(new WebViewClient());
         webView.setWebChromeClient(new WebChromeClient() {
-            private android.webkit.ValueCallback<android.net.Uri[]> filePathCallback;
-
             @Override
             public boolean onShowFileChooser(WebView webView,
                                              android.webkit.ValueCallback<android.net.Uri[]> filePathCallback,
                                              FileChooserParams fileChooserParams) {
-                this.filePathCallback = filePathCallback;
+                MainActivity.this.filePathCallback = filePathCallback;
                 android.content.Intent intent = new android.content.Intent(
                         android.content.Intent.ACTION_GET_CONTENT);
                 intent.addCategory(android.content.Intent.CATEGORY_OPENABLE);
@@ -126,6 +125,11 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+            // Always release the WebView file input to allow future picks
+            if (filePathCallback != null) {
+                filePathCallback.onReceiveValue(null);
+                filePathCallback = null;
             }
         }
     }
