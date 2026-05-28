@@ -2677,7 +2677,12 @@
         const kv=parseInt(document.getElementById('gtKV').value)||0;
         const pb=parseInt(document.getElementById('gtPB').value)||0;
         const va=parseInt(document.getElementById('gtVA').value)||0;
-        const zones={...gtSubjectZones};
+       const zones={...gtSubjectZones};
+SUBJECTS_19.forEach(s=>{
+    if(!zones[s]||!zones[s].zone){
+        zones[s]={zone:'Y',score:zones[s]?zones[s].score||'':''};
+    }
+});
 
         const logs=getGTLogs();
         if(currentGTEditId){
