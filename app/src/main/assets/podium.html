@@ -473,65 +473,80 @@
             bottom: 18px;
             left: 50%;
             transform: translateX(-50%);
-            width: calc(100% - 28px);
+            width: calc(100% - 40px);
             max-width: 460px;
-            background: rgba(14,16,22,0.55);
+            background: rgba(14,16,22,0.72);
             backdrop-filter: blur(36px) saturate(180%);
             -webkit-backdrop-filter: blur(36px) saturate(180%);
-            border: 1px solid rgba(255,255,255,0.10);
-            border-top-color: rgba(255,255,255,0.20);
-            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.13);
+            border-radius: 100px;
             display: flex;
+            align-items: center;
             z-index: 100;
-            padding: 6px;
+            padding: 6px 8px;
             gap: 2px;
-            box-shadow:
-                0 1px 0 rgba(255,255,255,0.07) inset,
-                0 -1px 0 rgba(0,0,0,0.30) inset,
-                0 18px 48px rgba(0,0,0,0.55);
+            height: 62px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.55), 0 1px 0 rgba(255,255,255,0.06) inset;
         }
         .nav-btn {
             flex: 1;
-            background: transparent;
-            border: 1px solid transparent;
-            color: var(--text-muted);
-            padding: 9px 4px 10px;
-            cursor: pointer;
+            background: none;
+            border: none;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 4px;
-            font-family: inherit;
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 1.6px;
-            text-transform: uppercase;
-            transition: all 0.25s cubic-bezier(.4,0,.2,1);
-            border-radius: 18px;
+            justify-content: center;
+            cursor: pointer;
             position: relative;
+            padding: 0;
+            height: 100%;
+            -webkit-tap-highlight-color: transparent;
+            font-family: inherit;
         }
-        .nav-btn svg { transition: stroke 0.2s; }
-        .nav-icon { font-size: 17px; line-height: 1; }
-
-        .nav-btn.active {
-            background: rgba(255,255,255,0.07);
-            border-color: rgba(255,255,255,0.10);
-            box-shadow: 0 1px 0 rgba(255,255,255,0.10) inset;
+        .nav-pill {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 8px 14px;
+            border-radius: 100px;
+            transition: background .22s ease, box-shadow .22s ease;
+            min-width: 44px;
         }
-
-        /* Per-tab active colors (kept from original — JS toggles .active on these in order) */
-        .nav-btn:nth-child(1).active     { color: #dfb872; }
-        .nav-btn:nth-child(1).active svg { stroke: #dfb872; }
-        .nav-btn:nth-child(2).active     { color: #88aedb; }
-        .nav-btn:nth-child(2).active svg { stroke: #88aedb; }
-        .nav-btn:nth-child(3).active     { color: #7ab89a; }
-        .nav-btn:nth-child(3).active svg { stroke: #7ab89a; }
-        .nav-btn:nth-child(4).active     { color: #b7a4dc; }
-        .nav-btn:nth-child(4).active svg { stroke: #b7a4dc; }
-        .nav-btn:nth-child(5).active     { color: #d98c7e; }
-        .nav-btn:nth-child(5).active svg { stroke: #d98c7e; }
-
-        /* (no dot marker — the filled pill highlight is enough) */
+        .nav-btn.active .nav-pill {
+            background: rgba(255,255,255,0.92);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+        }
+        .nav-ico {
+            width: 20px; height: 20px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .nav-ico svg { width: 20px; height: 20px; }
+        .nav-ico svg path,
+        .nav-ico svg rect,
+        .nav-ico svg circle,
+        .nav-ico svg ellipse {
+            fill: rgba(255,255,255,0.45);
+            transition: fill .22s;
+        }
+        .nav-btn.active .nav-ico svg path,
+        .nav-btn.active .nav-ico svg rect,
+        .nav-btn.active .nav-ico svg circle,
+        .nav-btn.active .nav-ico svg ellipse {
+            fill: #0f172a;
+        }
+        .nav-lbl {
+            font-size: 12px; font-weight: 700; letter-spacing: .01em;
+            color: transparent;
+            white-space: nowrap;
+            max-width: 0; overflow: hidden;
+            transition: max-width .25s ease, color .22s ease;
+            font-family: inherit;
+        }
+        .nav-btn.active .nav-lbl {
+            color: #0f172a;
+            max-width: 80px;
+        }
         .nav-btn.active::after { display: none; }
 
         /* ────────────────────────────────────────────────────
@@ -1428,24 +1443,34 @@
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
     <button class="nav-btn active" id="nav-timer" onclick="switchTab('timer')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2a3a4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-        Timer
+        <div class="nav-pill">
+            <span class="nav-ico"><svg viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm.75 5.25a.75.75 0 0 0-1.5 0V12c0 .2.08.39.22.53l3 3a.75.75 0 1 0 1.06-1.06l-2.78-2.78V7.25z"/></svg></span>
+            <span class="nav-lbl">Timer</span>
+        </div>
     </button>
     <button class="nav-btn" id="nav-mcq" onclick="switchTab('mcq')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2a3a4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="8" y1="8" x2="16" y2="8"></line><line x1="8" y1="12" x2="16" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
-        MCQ
+        <div class="nav-pill">
+            <span class="nav-ico"><svg viewBox="0 0 24 24"><path fill-rule="evenodd" d="M4 4a2 2 0 0 1 2-2h8.586A2 2 0 0 1 16 2.586L19.414 6A2 2 0 0 1 20 7.414V20a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4zm2 7a1 1 0 0 1 1-1h8a1 1 0 1 1 0 2H7a1 1 0 0 1-1-1zm1 3a1 1 0 1 0 0 2h5a1 1 0 1 0 0-2H7z"/></svg></span>
+            <span class="nav-lbl">MCQ</span>
+        </div>
     </button>
     <button class="nav-btn" id="nav-stats" onclick="switchTab('stats')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2a3a4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="m19 9-5 5-4-4-3 3"></path></svg>
-        Stats
+        <div class="nav-pill">
+            <span class="nav-ico"><svg viewBox="0 0 24 24"><rect x="3" y="14" width="4" height="7" rx="1"/><rect x="10" y="9" width="4" height="12" rx="1"/><rect x="17" y="4" width="4" height="17" rx="1"/></svg></span>
+            <span class="nav-lbl">Stats</span>
+        </div>
     </button>
     <button class="nav-btn" id="nav-plan" onclick="switchTab('plan')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2a3a4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-        Plan
+        <div class="nav-pill">
+            <span class="nav-ico"><svg viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8 2a1 1 0 0 1 1 1v1h6V3a1 1 0 1 1 2 0v1h1a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h1V3a1 1 0 0 1 1-1zm-2 7v10h12V9H6zm2 2h2v2H8v-2zm4 0h2v2h-2v-2zm-4 4h2v2H8v-2zm4 0h2v2h-2v-2z"/></svg></span>
+            <span class="nav-lbl">Plan</span>
+        </div>
     </button>
     <button class="nav-btn" id="nav-gt" onclick="switchTab('gt')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2a3a4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-        GT
+        <div class="nav-pill">
+            <span class="nav-ico"><svg viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 4a6 6 0 1 0 0 12A6 6 0 0 0 12 6zm0 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg></span>
+            <span class="nav-lbl">GT</span>
+        </div>
     </button>
 </nav>
 
